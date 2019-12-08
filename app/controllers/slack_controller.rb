@@ -5,13 +5,13 @@ class SlackController < ApplicationController
     
     end
     def slackmessage
-        json= JSON.parse(request.body.read)
-        token = json.parameter.token;
-        if token != "gG82JQaDj6NNRSubJKQtvNPs"
+        token = params[:token]
+        if token != "XoeXsgC2PcytS5cuiazz7fSh"
             return
         end
-        text = json.parameter.text;
-         message = 'Outgoing 成功';
+        userName = params[:user_id]
+        text1 = params[:text]
+        text = text1 + "@#{userName}"
         notifier = Slack::Notifier.new(Rails.application.config.slack_webhook_url)
         notifier.ping(text)
    
