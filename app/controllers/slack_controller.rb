@@ -11,7 +11,7 @@ class SlackController < ApplicationController
         end
         userName = params[:user_id]
         text1 = params[:text]
-        text = text1 + "@#{userName}"
+        text = "@#{userName}"
         notifier = Slack::Notifier.new(Rails.application.config.slack_webhook_url)
         notifier.ping(text)
    
