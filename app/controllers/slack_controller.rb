@@ -18,9 +18,8 @@ class SlackController < ApplicationController
         elsif params[:trigger_word] == '退勤'
             nowTime = DateTime.now
             @end = Savetime.create(end: nowTime,who: @userName)
-            @start  = Savetime.where(who: params[:who]).last(2)
-        @last = Savetime.where(who: params[:who]).last(1)
-        @text = @last - @start 
+            @start  = Savetime.where(who: params[:who]).last(2).first
+        @text = @end - @start
         text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{nowTime.hour}時#{nowTime.minute}分#{nowTime.second}秒\n勤務時間：#{@text}"
        
         else
