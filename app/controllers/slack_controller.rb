@@ -1,4 +1,6 @@
 class SlackController < ApplicationController
+    protect_from_forgery :except => [:slackmessage]
+
     def top
     
     end
