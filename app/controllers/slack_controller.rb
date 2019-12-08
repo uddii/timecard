@@ -18,8 +18,11 @@ class SlackController < ApplicationController
         elsif params[:trigger_word] == '退勤'
             nowTime = DateTime.now
             @end = Savetime.create(end: nowTime,who: @userName)
-        text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{nowTime.hour}時#{nowTime.minute}分#{nowTime.second}秒"
-        redirect_to controller: 'slack', action: 'count', who: @userName
+            @start  = Savetime.where(who: params[:who]).last(2)
+        @last = Savetime.where(who: params[:who]).last(1)
+        @text = @last - @start 
+        text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{nowTime.hour}時#{nowTime.minute}分#{nowTime.second}秒\n勤務時間：#{@text}"
+       
         else
             text = "<@#{@userName}>\nもっとはたらけよ"
         end
@@ -28,10 +31,7 @@ class SlackController < ApplicationController
         
     end
     def count
-        @start  = Savetime.where(who: params[:who]).last(2)
-        @last = Savetime.where(who: params[:who]).last(1)
-        @text = @last - @start 
-        notifier = Slack::Notifier.new(Rails.application.config.slack_webhook_url)
-        notifier.ping(@text)
+        
+        
     end
 end
