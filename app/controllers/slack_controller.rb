@@ -21,7 +21,8 @@ class SlackController < ApplicationController
             @day = Date.new
             @end = Savetime.create(end: nowTime,who: @userName,day: @day )
             @start  = Savetime.where(who: @userName).last(2).first
-        @text = nowTime.to_i - @start.start.to_i
+        @text2 = nowTime.to_i - @start.start.to_i
+        @text = Time.parse(@text2)
         text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{nowTime.hour}時#{nowTime.min}分#{nowTime.sec}秒\n勤務時間：#{@text}"
        
         else
