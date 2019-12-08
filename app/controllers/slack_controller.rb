@@ -21,7 +21,7 @@ class SlackController < ApplicationController
             @day = Date.new
             @end = Savetime.create(end: nowTime,who: @userName,day: @day )
             @start  = Savetime.where(who: @userName).last(2).first
-
+        @text1 = nowTime.hour.to_i - @start.start.hour.to_i
         @text2 = nowTime.min.to_i - @start.start.min.to_i
         @text3 = nowTime.sec.to_i - @start.start.sec.to_i
 
