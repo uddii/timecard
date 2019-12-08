@@ -1,0 +1,2 @@
+class Savetime < ApplicationRecord
+end
