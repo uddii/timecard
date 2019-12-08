@@ -13,12 +13,12 @@ class SlackController < ApplicationController
         text1 = params[:text]
         if params[:trigger_word] == '出勤'
             nowTime = Time.now
-            @day = Date.now
+            @day = Date.new
             @start = Savetime.create(start: nowTime,who: @userName,day: @day )
             text = "<@#{@userName}>\n出勤を確認しました！！\n出勤時刻：#{nowTime.hour}時#{nowTime.minute}分#{nowTime.second}秒"
         elsif params[:trigger_word] == '退勤'
             nowTime = Time.now
-            @day = Date.now
+            @day = Date.new
             @end = Savetime.create(end: nowTime,who: @userName,day: @day )
             @start  = Savetime.where(who: params[:who]).last(2).first
         @text = nowTime - @start.start
