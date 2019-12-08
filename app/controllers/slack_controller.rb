@@ -11,7 +11,13 @@ class SlackController < ApplicationController
         end
         userName = params[:user_id]
         text1 = params[:text]
-        text = "@#{userName}"
+        if params[:trigger_word] == '出勤'
+        text = "<@#{userName}>\n出勤を確認しました！！"
+        elsif params[:trigger_word] == '退勤'
+        text = "<@#{userName}>\n本日もお疲れ様 (^_^)"
+        else
+            text = "<@#{userName}>\nもっとはたらけよ"
+        end
         notifier = Slack::Notifier.new(Rails.application.config.slack_webhook_url)
         notifier.ping(text)
    
