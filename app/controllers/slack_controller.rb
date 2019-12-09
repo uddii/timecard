@@ -15,18 +15,18 @@ class SlackController < ApplicationController
             nowTime = Time.now
             @day = Date.new
             @start = Savetime.create(start: nowTime,who: @userName,day: @day )
-            text = "<@#{@userName}>\n出勤を確認しました！！\n出勤時刻：#{nowTime.hour}時#{nowTime.min}分#{nowTime.sec}秒"
+            text = "<@#{@userName}>\n出勤を確認しました！！\n出勤時刻：#{@start.hour}時#{@start.min}分#{@start.sec}秒"
         elsif params[:trigger_word] == '退勤'
             nowTime = Time.now
             @day = Date.new
             @end = Savetime.create(end: nowTime,who: @userName,day: @day )
             @start  = Savetime.where(who: @userName).last(2).first
-        @text1 = nowTime.hour.to_i - @start.start.hour.to_i
-        @text2 = nowTime.min.to_i - @start.start.min.to_i
-        @text3 = nowTime.sec.to_i - @start.start.sec.to_i
+        @text1 = @end.hour.to_i - @start.start.hour.to_i
+        @text2 = @end.min.to_i - @start.start.min.to_i
+        @text3 = @end.sec.to_i - @start.start.sec.to_i
 
-        texttext = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{nowTime.hour}時#{nowTime.min}分#{nowTime.sec}秒\n勤務時間：#{@text1}時間#{@text2}分#{@text3}秒"
-       text = "スタートは#{@start.start }\nエンドは#{@end.end }"
+        text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{@end.hour}時#{@end.min}分#{@end.sec}秒\n勤務時間：#{@text1}時間#{@text2}分#{@text3}秒"
+
         else
             text = "<@#{@userName}>\nもっとはたらけよ"
         end
