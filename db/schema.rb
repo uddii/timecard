@@ -10,6 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 2019_12_09_072716) do
+
+  create_table "savetimes", force: :cascade do |t|
+    t.string "who"
+    t.time "start"
+    t.time "end"
+    t.date "day"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "totals", force: :cascade do |t|
+    t.integer "totalhour", default: 0
+    t.integer "totalminutes", default: 0
+    t.string "who"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
 end

@@ -21,12 +21,36 @@ class SlackController < ApplicationController
             @day = Date.new
             @end = Savetime.create(end: nowTime,who: @userName,day: @day )
             @start  = Savetime.where(who: @userName).last(2).first
-        @text1 = @end.end.hour.to_i - @start.start.hour.to_i
-        @text2 = @end.end.min.to_i - @start.start.min.to_i
-        @text3 = @end.end.sec.to_i - @start.start.sec.to_i
+            @text1 = @end.end.hour.to_i - @start.start.hour.to_i
+            if @text1 ==  0
+            @text2 = @end.end.min.to_i - @start.start.min.to_i
+            elsif @text1 > 0 
+                if @end.end.min.to_i < @start.start.min.to_i
+                    @text2 = 60 - (@start.start.min.to_i -  @end.end.min.to_i)
+                elsif @end.end.min.to_i >= @start.start.min.to_i
+                    @text2 = @end.end.min.to_i - @start.start.min.to_i
+                end
+            end
 
-        text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{@end.end.hour}時#{@end.end.min}分#{@end.end.sec}秒\n勤務時間：#{@text1}時間#{@text2}分#{@text3}秒"
-
+          
+            if Total.exists?(who: @userName )
+                @total = Total.find_by(who: @userName)
+                @calTotalminutes = @total.totalminutes + @text2
+                if  @calTotalminutes >= 60
+                     @hourFromTotalMinutes = @calTotalminutes/60.to_f.floor
+                     @total.totalhour = @total.totalhour + @text1 + @hourFromTotalMinutes
+                     @total.totalminutes = @calTotalminutes - (60 * @hourFromTotalMinutes)
+                     @total.save
+                else
+                    @total.totalminutes = @text2
+                    @total.totalhour += @text1 
+                    @total.save
+                end
+                
+            else
+                @total = Total.create(who: @userName,totalhour: @text1, totalminutes: @text2)
+            end
+            text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{@end.end.hour}時#{@end.end.min}分#{@end.end.sec}秒\n勤務時間：#{@text1}時間#{@text2}分\nトータルの勤務時間：#{ @total.totalhour}時間#{@total.totalminutes}分"
         else
             text = "<@#{@userName}>\nもっとはたらけよ"
         end
@@ -34,8 +58,5 @@ class SlackController < ApplicationController
         notifier.ping(text)
         
     end
-    def count
-        
-        
-    end
+ 
 end
