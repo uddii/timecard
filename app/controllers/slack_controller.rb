@@ -25,8 +25,8 @@ class SlackController < ApplicationController
         @text2 = nowTime.min.to_i - @start.start.min.to_i
         @text3 = nowTime.sec.to_i - @start.start.sec.to_i
 
-        text = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{nowTime.hour}時#{nowTime.min}分#{nowTime.sec}秒\n勤務時間：#{@text1}時間#{@text2}分#{@text3}秒"
-       
+        texttext = "<@#{@userName}>\n本日もお疲れ様 (^_^)\n退勤時刻：#{nowTime.hour}時#{nowTime.min}分#{nowTime.sec}秒\n勤務時間：#{@text1}時間#{@text2}分#{@text3}秒"
+       text = "スタートは#{@start }"
         else
             text = "<@#{@userName}>\nもっとはたらけよ"
         end
