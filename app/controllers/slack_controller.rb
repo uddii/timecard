@@ -42,7 +42,7 @@ class SlackController < ApplicationController
                      @total.totalminutes = @calTotalminutes - (60 * @hourFromTotalMinutes)
                      @total.save
                 else
-                    @total.totalminutes = @text2
+                    @total.totalminutes = @calTotalminutes
                     @total.totalhour += @text1 
                     @total.save
                 end
