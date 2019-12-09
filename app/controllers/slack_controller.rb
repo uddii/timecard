@@ -17,7 +17,7 @@ class SlackController < ApplicationController
             @start = Savetime.create(start: nowTime,who: @userName,day: @day )
             text = "<@#{@userName}>\n出勤を確認しました！！\n出勤時刻：#{@start.start.hour}時#{@start.start.min}分#{@start.start.sec}秒"
         elsif params[:trigger_word] == '退勤'
-            @start  = Savetime.where(who: @userName).last(2).first
+            @start  = Savetime.where(who: @userName).last(1).first
             if @start.start.nil?
                 text ='出勤してなくね？？'
                 notifier = Slack::Notifier.new(Rails.application.config.slack_webhook_url)
