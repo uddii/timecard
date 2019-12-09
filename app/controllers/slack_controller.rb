@@ -17,10 +17,17 @@ class SlackController < ApplicationController
             @start = Savetime.create(start: nowTime,who: @userName,day: @day )
             text = "<@#{@userName}>\n出勤を確認しました！！\n出勤時刻：#{@start.start.hour}時#{@start.start.min}分#{@start.start.sec}秒"
         elsif params[:trigger_word] == '退勤'
+            @start  = Savetime.where(who: @userName).last(2).first
+            if @start.start.nil?
+                text ='出勤してなくね？？'
+                notifier = Slack::Notifier.new(Rails.application.config.slack_webhook_url)
+                notifier.ping(text)
+                return
+            else
             nowTime = Time.now
             @day = Date.new
             @end = Savetime.create(end: nowTime,who: @userName,day: @day )
-            @start  = Savetime.where(who: @userName).last(2).first
+
             @text1 = @end.end.hour.to_i - @start.start.hour.to_i
             if @text1 ==  0
             @text2 = @end.end.min.to_i - @start.start.min.to_i
@@ -31,6 +38,7 @@ class SlackController < ApplicationController
                     @text2 = @end.end.min.to_i - @start.start.min.to_i
                 end
             end
+        end
 
           
             if Total.exists?(who: @userName )
