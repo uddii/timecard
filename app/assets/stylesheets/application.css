@@ -13,3 +13,13 @@
  *= require_tree .
  *= require_self
  */
+html{
+    margin: 0;
+    padding: 0;
+}
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: "Gen Jyuu Gothic P", "Hiragino Kaku Gothic Pro W6", "Hiragino Sans W3"
+}
