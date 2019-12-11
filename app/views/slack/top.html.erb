@@ -18,7 +18,7 @@
 
 </div>
 
-<section id="ranking" v-bind:class="{cross: ranking,nocross: noranking}">
+<section id="ranking" v-bind:class="{cross: ranking,nocross: noranking,start: load}">
 <div id='cross_base'> 
 <span id='cross'v-show='ranking' v-on:click='cross'><i class="fas fa-times fa-3x"></i></span>
 </div>
@@ -41,18 +41,21 @@ var app = new Vue({
     data: {
    ranking: false,
    noranking: false,
+   load: true,
    rankdatas: []
     },
 
     methods: {
         cross: function(){
-            this.ranking = !this.ranking;
+            this.ranking = false;
             this.noranking = true;
+            this.load = false;
         },
         getranking: function(){
             self = this;
-            self.noranking = !self.noranking;
-            self.ranking = !self.ranking;
+            self.noranking = false;
+            self.ranking = true;
+             self.load = false;
         var href2 = '/getrank.json';
          axios.get(href2)
          .then(function(res){

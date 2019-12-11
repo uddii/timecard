@@ -94,6 +94,7 @@
               }
         }
         #ranking.cross{
+            display: block;
             width:100%;
             height: 100vh;
             position: absolute;
@@ -105,11 +106,11 @@
           
               
         }
-        #ranking{
-            display: none;
-          
+        #ranking.start{
+         display: none;
         }
         #ranking.nocross{
+            display: block;
             width:100%;
             height: 100vh;
             position: absolute;
