@@ -40,14 +40,14 @@ var app = new Vue({
     el: "#top",
     data: {
    ranking: false,
-   noranking: true,
+   noranking: false,
    rankdatas: []
     },
 
     methods: {
         cross: function(){
             this.ranking = !this.ranking;
-            this.noranking = !this.noranking;
+            this.noranking = true;
         },
         getranking: function(){
             self = this;
