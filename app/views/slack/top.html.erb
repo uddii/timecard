@@ -13,16 +13,22 @@
  <div v-on:click="getranking" class="btn-real-dent">
 <%= image_tag "/geekbig.png"%>
 </div>
+
 <a>労働時間ランキング</a>
 
 </div>
-<section id="ranking" v-show='ranking'>
-<span  v-on:click="ranking = !ranking">
-<div v-for='(rankdata,index) in rankdatas'>
-    <h3>第{{ index + 1 }}位：{{ rankdata.nickname}}&nbsp;さん {{ rankdata.totalhour}}時間  {{rankdata.totalminutes}}分</h3>
+
+<section id="ranking" v-bind:class="{cross: ranking,nocross: noranking}">
+<div id='cross_base'> 
+<span id='cross'v-show='ranking' v-on:click='cross'><i class="fas fa-times fa-3x"></i></span>
+</div>
+<div class="ranking_box"v-for='(rankdata,index) in rankdatas'>
+    <h3>第{{ index + 1 }}位：{{ rankdata.nickname}}&nbsp;さん {{ rankdata.totalhour}}時間  {{rankdata.totalminutes}}分</h3>　"
+  
 </div>
 
 </section>
+
 </section>
 
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.21/dist/vue.js"></script>
@@ -33,13 +39,18 @@ var app = new Vue({
     el: "#top",
     data: {
    ranking: false,
+   noranking: true,
    rankdatas: []
     },
 
     methods: {
+        cross: function(){
+            this.ranking = !this.ranking;
+            this.noranking = !this.noranking;
+        },
         getranking: function(){
             self = this;
-            
+            self.noranking = !self.noranking;
             self.ranking = !self.ranking;
         var href2 = '/getrank.json';
          axios.get(href2)
