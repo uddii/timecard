@@ -22,8 +22,10 @@
 <div id='cross_base'> 
 <span id='cross'v-show='ranking' v-on:click='cross'><i class="fas fa-times fa-3x"></i></span>
 </div>
-<div class="ranking_box"v-for='(rankdata,index) in rankdatas'>
 <h2>労働時間ランキング</h2>
+<h3 v-show='loading'>Now Loading....</h3>
+<div v-show="!loading" class="ranking_box"v-for='(rankdata,index) in rankdatas'>
+
     <h3>第{{ index + 1 }}位：{{ rankdata.nickname}}&nbsp;さん </h3>
     <h3>{{ rankdata.totalhour}}時間  {{rankdata.totalminutes}}分</h3>
   
@@ -43,6 +45,7 @@ var app = new Vue({
    ranking: false,
    noranking: false,
    load: true,
+    loading: true,
    rankdatas: []
     },
 
@@ -61,7 +64,7 @@ var app = new Vue({
          axios.get(href2)
          .then(function(res){
         self.rankdatas = res.data.rankdatas;
-          
+        self.loading = false;
       })
       .catch(function(err){
         window.alert(err)
