@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   root :to => 'slack#top'
   get '/top' =>  'slack#top'
   post '/top' => 'slack#slackmessage'
-
+  get '/getrank' => 'slack#getrank'
 end
