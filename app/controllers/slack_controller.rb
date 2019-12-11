@@ -4,6 +4,7 @@ class SlackController < ApplicationController
     def top
       
     end
+
     def getrank
         @rankdatas = Total.all.order(totalseconds: "DESC")
         respond_to do |format|
@@ -11,6 +12,7 @@ class SlackController < ApplicationController
             format.json { render json: {rankdatas: @rankdatas} }
          end
     end
+
     def slackmessage
         token = params[:token]
         if token != ENV['SLACK_OUTGOING_WEBHOOK_TOKEN']
@@ -78,12 +80,12 @@ class SlackController < ApplicationController
                      @hourFromTotalMinutes = @calTotalminutes/60.to_f.floor
                      @total.totalhour = @total.totalhour + @text1 + @hourFromTotalMinutes
                      @total.totalminutes = @calTotalminutes - (60 * @hourFromTotalMinutes)
-                     @total.totalseconds = ( @total.totalhour * 3600) + (@total.totalminutes * 60 )
+                     @total.totalseconds = @total.totalhour * 3600 + @total.totalminutes * 60 
                      @total.save
                 else
                     @total.totalminutes = @calTotalminutes
-                    @total.totalhour += @text1 
-                    @total.totalseconds = ( @total.totalhour * 3600) + (@total.totalminutes * 60 )
+                    @total.totalhour += @text1
+                    @total.totalseconds =  @total.totalhour * 3600 + @total.totalminutes * 60 
                     @total.save
                 end
                 
