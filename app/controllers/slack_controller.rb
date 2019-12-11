@@ -21,13 +21,20 @@ class SlackController < ApplicationController
         @userName = params[:user_id]
         text1 = params[:text]
 
+        if params[:trigger_word] =='表示名'
+            @text = params[:text].sub(/表示名/, '').gsub(" ", "")   
+            @thistotal = Total.find_by(who: @userName)
+            @thistotal.nickname = @text
+            @thistotal.save
+            return
+        end
         if params[:trigger_word] =='ん、出勤してなくね？？'
+            return
+        elsif params[:trigger_word] =='ん、退勤してなくね？？'
             return
         end
 
-        if params[:trigger_word] =='ん、退勤してなくね？？'
-            return
-        end
+
 
         if params[:trigger_word] == '出勤'
            unless Savetime.where(who: @userName).last(1).first.nil?

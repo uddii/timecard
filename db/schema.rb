@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 2019_12_09_072716) do
     t.integer "totalhour", default: 0
     t.integer "totalminutes", default: 0
     t.string "who"
+    t.string "nickname"
     t.integer "totalseconds", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
