@@ -28,7 +28,8 @@ class SlackController < ApplicationController
         end
 
         if params[:trigger_word] == '出勤'
-           if @last  = Savetime.where(who: @userName).last(1).first.exists?
+           unless Savetime.where(who: @userName).last(1).first.nil?
+
             if @last.end.nil?
                 text = 'ん、退勤してなくね？？'
                 notifier = Slack::Notifier.new(Rails.application.config.slack_webhook_url)
