@@ -10,11 +10,12 @@
 <%= image_tag "/geek.gif"%>
 </div>
 <div id='top_container'>
+
  <div v-on:click="getranking" class="btn-real-dent">
 <%= image_tag "/geekbig.png"%>
 </div>
 
-<h1 style='text-align:center;padding-top:10px;'>⬆押してみて</h1>
+<h1 style='text-align:center;'>Press this button </h1>
 
 </div>
 
@@ -22,7 +23,8 @@
 <div id='cross_base'> 
 <span id='cross'v-show='ranking' v-on:click='cross'><i class="fas fa-times fa-3x"></i></span>
 </div>
-<h2>労働時間ランキング</h2>
+<div id='ranking_container'>
+<h2 v-show="!loading"style='text-align:center;'>労働時間ランキング</h2>
 <h3 v-show='loading'>Now Loading....</h3>
 <div v-show="!loading" class="ranking_box"v-for='(rankdata,index) in rankdatas'>
 
@@ -30,7 +32,7 @@
     <h3>{{ rankdata.totalhour}}時間  {{rankdata.totalminutes}}分</h3>
   
 </div>
-
+</div>
 </section>
 
 </section>
