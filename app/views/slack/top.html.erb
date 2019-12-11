@@ -19,7 +19,7 @@
 <section id="ranking" v-show='ranking'>
 <span  v-on:click="ranking = !ranking">
 <div v-for='(rankdata,index) in rankdatas'>
-    <h3>第{{ index }}位：{{ rankdata.who}}さん {{ rankdata.totalhour}}時間  {{rankdata.totalminutes}}分</h3>
+    <h3>第{{ index + 1 }}位：{{ rankdata.who}}&nbsp;さん {{ rankdata.totalhour}}時間  {{rankdata.totalminutes}}分</h3>
 </div>
 
 </section>
@@ -45,7 +45,7 @@ var app = new Vue({
          axios.get(href2)
          .then(function(res){
         self.rankdatas = res.data.rankdatas;
-            window.alert(res.data.rankdatas)
+          
       })
       .catch(function(err){
         window.alert(err)
