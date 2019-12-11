@@ -65,9 +65,8 @@ class SlackController < ApplicationController
             end
         end
 
-          
-            if Total.exists?(who: @userName )
-                @total = Total.find_by(who: @userName)
+          @total = Total.find_by(who: @userName)
+            unless @total.nil?
                 @calTotalminutes = @total.totalminutes + @text2
                 if  @calTotalminutes >= 60
                      @hourFromTotalMinutes = @calTotalminutes/60.to_f.floor
