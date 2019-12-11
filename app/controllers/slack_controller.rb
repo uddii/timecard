@@ -22,11 +22,16 @@ class SlackController < ApplicationController
         text1 = params[:text]
 
         if params[:trigger_word] =='表示名'
-            @text = params[:text].sub(/表示名/, '').gsub(" ", "")   
-            @thistotal = Total.find_by(who: @userName)
-            @thistotal.nickname = @text
+            @displayname = params[:text].sub(/表示名/, '').gsub(" ", "")   
+            @thistotal  = Total.find_by(who: @userName)
+            unless @thistotal.nil?
+            @thistotal.nickname =  @displayname
             @thistotal.save
             return
+            else
+                @thistotal = Total.create(who: @userName,nickname: @displayname)
+                return
+            end
         end
         if params[:trigger_word] =='ん、出勤してなくね？？'
             return
