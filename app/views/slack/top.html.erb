@@ -14,7 +14,7 @@
 <%= image_tag "/geekbig.png"%>
 </div>
 
-<a>労働時間ランキング</a>
+<h1 style='text-align:center;padding-top:10px;'>⬆押してみて</h1>
 
 </div>
 
@@ -23,6 +23,7 @@
 <span id='cross'v-show='ranking' v-on:click='cross'><i class="fas fa-times fa-3x"></i></span>
 </div>
 <div class="ranking_box"v-for='(rankdata,index) in rankdatas'>
+<h2>労働時間ランキング</h2>
     <h3>第{{ index + 1 }}位：{{ rankdata.nickname}}&nbsp;さん </h3>
     <h3>{{ rankdata.totalhour}}時間  {{rankdata.totalminutes}}分</h3>
   
