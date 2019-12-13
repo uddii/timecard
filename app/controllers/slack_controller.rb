@@ -83,7 +83,7 @@ class SlackController < ApplicationController
                     @text2 = @end.end.min.to_i - @start.start.min.to_i
                 end
             end
-        end
+             end
 
           @total = Total.find_by(who: @userName)
             unless @total.nil?
@@ -112,5 +112,5 @@ class SlackController < ApplicationController
         notifier.ping(text)
         
     end
- 
 end
+
